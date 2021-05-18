@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nginx-container:
+    build: ./nginx
+    image: nginx-container
+    restart: always
+    ports:
+      - "443:443"
+      - "80:80"
+  mariadb-container:
+    build: ./mariadb
+    image: mariadb-container
+    restart: always
+    volumes:
+      - ./mariadb:/var/lib/mysql
+  wordpress-container:
+    build: ./wordpress
+    image: wordpress-container
+    restart: always
+    depends_on:
+      - mariadb-container
+    volumes:
+      - ./wordpress:/var/www/html
