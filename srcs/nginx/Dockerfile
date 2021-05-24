@@ -3,7 +3,7 @@ FROM debian:buster
 COPY jabenjam.42.fr.conf nginx.conf ssl_request.conf index.html ./
 
 RUN apt-get update \
-    && apt-get upgrade \
+    && apt-get upgrade -y \
     && apt-get install -y nginx openssl vim \
     && mkdir /etc/nginx/ssl \
     && chmod 700 /etc/nginx/ssl \
@@ -13,9 +13,8 @@ RUN apt-get update \
     && rm /etc/nginx/nginx.conf \
     && mv nginx.conf etc/nginx \
     && mv jabenjam.42.fr.conf etc/nginx/conf.d \
-    && mv index.html www/jabenjam.42.fr \
-    && service nginx start
+    && mv index.html www/jabenjam.42.fr
 
 EXPOSE 443
 
-ENTRYPOINT bash
+ENTRYPOINT service nginx start

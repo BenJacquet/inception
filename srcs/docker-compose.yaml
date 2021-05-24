@@ -6,26 +6,13 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     image: nginx-container
+    links:
+      - wordpress-container
     restart: unless-stopped
     ports:
       - "443:443"
-    networks:
-      - frontend
-
-  mariadb-container:
-    build: ./mariadb
-    image: mariadb-container
-    restart: unless-stopped
-    environment:
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wp_db
-    volumes:
-      - /home/jabenjam/data/db:/var/lib/mysql #REMPLACER PAR /home/jabenjam/data/volumemariadb
-    ports:
-      - "3306:3306"
 #    networks:
-#      - backend
+#      - frontend
 
   wordpress-container:
     build: ./wordpress
@@ -40,12 +27,27 @@ services:
         WORDPRESS_DB_PASSWORD: root
         WORDPRESS_DB_HOST: mariadb_container:3306
         WORDPRESS_DB_NAME: wp_db
-      volumes:
-        - /home/jabenjam/data/wp:/usr/share/wordpress #REMPLACER PAR /home/jabenjam/data/volumemariadb
-        ports:
-          - "9000:9000"
+    volumes:
+      - /home/jabenjam/data/wp:/usr/share/wordpress #REMPLACER PAR /home/jabenjam/data/volumemariadb
+    ports:
+      - "9000:9000"
 #    networks:
 #      - frontend
+#      - backend
+
+  mariadb-container:
+    build: ./mariadb
+    image: mariadb-container
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wp_db
+    volumes:
+      - /home/jabenjam/data/db:/var/lib/mysql #REMPLACER PAR /home/jabenjam/data/volumemariadb
+    ports:
+      - "3306:3306"
+#    networks:
 #      - backend
 
 #  networks:
