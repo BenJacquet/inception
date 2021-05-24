@@ -38,12 +38,13 @@ services:
   mariadb-container:
     build: ./mariadb
     image: mariadb-container
-    restart: unless-stopped
-    environment:
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wp_db
+    #restart: unless-stopped
+    #environment:
+    #  MYSQL_USER: root
+    #  MYSQL_ROOT_PASSWORD: root
+    #  MYSQL_DATABASE: wp_db
     volumes:
+      - /home/jabenjam/data/db-logs:/var/log/mysql # debug volume
       - /home/jabenjam/data/db:/var/lib/mysql #REMPLACER PAR /home/jabenjam/data/volumemariadb
     ports:
       - "3306:3306"

@@ -3,6 +3,7 @@ Setup Maria DB
 Credentials dans un fichier .env
 pas de login ou mdp contenant admin
 nom de domaine jabenjam.42.fr qui redirige vers l'IP du conteneur nginx
+modifier le hosts
 
 OK Setup nginx avec TLS
 OK Volume WP
