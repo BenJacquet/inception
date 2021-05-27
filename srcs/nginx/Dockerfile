@@ -5,7 +5,7 @@ COPY jabenjam.42.fr.conf nginx.conf ssl_request.conf index.html ./
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y nginx openssl vim \
-    && mkdir /etc/nginx/ssl \
+    && mkdir -p /etc/nginx/ssl \
     && chmod 700 /etc/nginx/ssl \
     && openssl req -x509 -config ssl_request.conf -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt \
     && mkdir -p www/jabenjam.42.fr \

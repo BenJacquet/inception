@@ -23,10 +23,10 @@ services:
       - mariadb-container
     restart: unless-stopped
     environment:
-        WORDPRESS_DB_USER: root
-        WORDPRESS_DB_PASSWORD: root
+        WORDPRESS_DB_USER: wordpress
+        WORDPRESS_DB_PASSWORD: wordpress_pwd
         WORDPRESS_DB_HOST: mariadb_container:3306
-        WORDPRESS_DB_NAME: wp_db
+        WORDPRESS_DB_NAME: wordpress
     volumes:
       - /home/jabenjam/data/wp:/usr/share/wordpress #REMPLACER PAR /home/jabenjam/data/volumemariadb
     ports:
@@ -40,11 +40,11 @@ services:
     image: mariadb-container
     #restart: unless-stopped
     #environment:
-    #  MYSQL_USER: root
-    #  MYSQL_ROOT_PASSWORD: root
-    #  MYSQL_DATABASE: wp_db
+    #  MYSQL_USER: wordpress
+    #  MYSQL_ROOT_PASSWORD: wordpress_pwd
+    #  MYSQL_DATABASE: wordpress
     volumes:
-      - /home/jabenjam/data/db-logs:/var/log/mysql # debug volume
+      - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
       - /home/jabenjam/data/db:/var/lib/mysql #REMPLACER PAR /home/jabenjam/data/volumemariadb
     ports:
       - "3306:3306"
