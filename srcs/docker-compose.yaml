@@ -1,6 +1,37 @@
 version: '3'
 services:
 
+  mariadb-container:
+    #build: ./mariadb
+    #image: mariadb-container
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_USER: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress_pwd
+      MYSQL_DATABASE: wordpress
+    volumes:
+      - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
+      - /home/jabenjam/data/db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  wordpress-container:
+    build: ./wordpress
+    image: wordpress-container
+    depends_on:
+      - mariadb-container
+    restart: unless-stopped
+    environment:
+        WORDPRESS_DB_USER: wordpress
+        WORDPRESS_DB_PASSWORD: wordpress_pwd
+        WORDPRESS_DB_HOST: mariadb-container:3306
+        WORDPRESS_DB_NAME: wordpress
+    #volumes:
+    # - /home/jabenjam/data/wp:/var/www/html
+    ports:
+      - "9000:9000"
+
   nginx-container:
     build:
       context: ./nginx
@@ -11,48 +42,21 @@ services:
     restart: unless-stopped
     ports:
       - "443:443"
-#    networks:
-#      - frontend
 
-  wordpress-container:
-    build: ./wordpress
-    image: wordpress-container
-    depends_on:
-      - mariadb-container
-    links:
-      - mariadb-container
-    restart: unless-stopped
-    environment:
-        WORDPRESS_DB_USER: wordpress
-        WORDPRESS_DB_PASSWORD: wordpress_pwd
-        WORDPRESS_DB_HOST: mariadb_container:3306
-        WORDPRESS_DB_NAME: wordpress
-    volumes:
-      - /home/jabenjam/data/wp:/usr/share/wordpress #REMPLACER PAR /home/jabenjam/data/volumemariadb
-    ports:
-      - "9000:9000"
-#    networks:
-#      - frontend
-#      - backend
+#  wordpress-container:
+#    image: wordpress:5.7.2-php7.3-fpm
+#    depends_on:
+#      - mariadb-container
+#    restart: unless-stopped
+#    environment:
+#        WORDPRESS_DB_USER: wordpress
+#        WORDPRESS_DB_PASSWORD: wordpress_pwd
+#        WORDPRESS_DB_HOST: mariadb-container:3306
+#        WORDPRESS_DB_NAME: wordpress
+#    ports:
+#      - "9000:9000"
 
-  mariadb-container:
-    build: ./mariadb
-    image: mariadb-container
-    #restart: unless-stopped
-    #environment:
-    #  MYSQL_USER: wordpress
-    #  MYSQL_ROOT_PASSWORD: wordpress_pwd
-    #  MYSQL_DATABASE: wordpress
-    volumes:
-      - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
-      - /home/jabenjam/data/db:/var/lib/mysql #REMPLACER PAR /home/jabenjam/data/volumemariadb
-    ports:
-      - "3306:3306"
-#    networks:
-#      - backend
-
-#  networks:
-#    frontend:
-#      driver: bridge
-#    backend:
-#      driver: bridge
+networks:
+  default:
+    external:
+      name: inception_network

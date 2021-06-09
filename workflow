@@ -2,15 +2,16 @@ Setup WP et php
 Setup Maria DB
 Credentials dans un fichier .env
 pas de login ou mdp contenant admin
-nom de domaine jabenjam.42.fr qui redirige vers l'IP du conteneur nginx
-modifier le hosts
 
+OK mettre en place un docker network
+OK avoir mes master process en PID 1
+OK modifier le hosts
+OK nom de domaine jabenjam.42.fr qui redirige vers l'IP du conteneur nginx
 OK Setup nginx avec TLS
 OK Volume WP
 OK Volume DB
 OK Docker network
 OK Redemarrage en cas de crash
-
 OK REMPLACER LES VOLUMES PAR /home/user42/data
 
 deployer TLS 1.3

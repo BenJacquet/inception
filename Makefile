@@ -1,24 +1,25 @@
 COMPOSE = srcs/docker-compose.yaml
+IMGS = nginx-container wordpress-container mariadb-container
 
-setup :
-	#sudo adduser jabenjam
-	sudo useradd -m -G root jabenjam
-	su - jabenjam
-	echo "currently logged as $(whoami)"
-
-all : setup
+all :
+	sudo sed -i '1 i\127.0.0.1\tjabenjam.42.fr' /etc/hosts
+	@echo "added jabenjam.42.fr to known hosts"
+	docker network create inception_network
+	@echo "created inception network"
 	docker-compose -f $(COMPOSE) up -d
-	echo "created all containers"
+	@echo "created inception containers"
 
 clean :
-	docker-compose -f $(COMPOSE) down -d
-	echo "destroyed all containers"
+	docker-compose -f $(COMPOSE) down
+	@echo "removed inception containers"
+	docker network rm inception_network
+	@echo "removed inception network"
 
 fclean : clean
-	su - user42
-	echo "currently logged as $(whoami)"
-	sudo deluser --remove-home jabenjam
-	echo "deleted user jabenjam"
+	docker image rm -f $(IMGS)
+	@echo "removed inception images"
+	sudo sed -i '/127.0.0.1\tjabenjam.42.fr/d' /etc/hosts
+	@echo "removed jabenjam.42.fr from known hosts"
 
 re : fclean all
 

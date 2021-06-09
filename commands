@@ -1,6 +1,12 @@
+lancer docker-compose avec un environnement issu d'un fichier
 docker-compose -f ./srcs/docker-compose.yaml --env-file ./srcs/.env
 
-
-Voir qui ecoute quel port
-
+Voir qui ecoute quel port :
 sudo netstat -pna | grep portrecherche
+
+verifier le pid 1 :
+ps aux
+
+executer un bash dans un conteneur :
+docker exec -it nom_du_conteneur bash
+
