@@ -2,6 +2,7 @@ Setup WP et php
 Setup Maria DB
 Credentials dans un fichier .env
 pas de login ou mdp contenant admin
+Editer les identifiants dans wp-config pour qu'ils utilisent les valeurs de l'environnement
 
 OK mettre en place un docker network
 OK avoir mes master process en PID 1

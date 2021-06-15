@@ -7,12 +7,17 @@ services:
     image: mariadb
     restart: always
     environment:
-      MYSQL_USER: wordpress
-      MYSQL_ROOT_PASSWORD: wordpress_pwd
+      MYSQL_USER: wordpress 
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
-    volumes:
-      - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
-      - /home/jabenjam/data/db:/var/lib/mysql
+    #  - MYSQL_USER=${MYSQL_USER}
+    #  - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    #  - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    #  - MYSQL_DATABASE=${MYSQL_DATABASE}
+    #volumes:
+    #  - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
+    #  - /home/jabenjam/data/db:/var/lib/mysql
     ports:
       - "3306:3306"
 
@@ -23,25 +28,14 @@ services:
       - mariadb-container
     restart: unless-stopped
     environment:
-        WORDPRESS_DB_USER: wordpress
-        WORDPRESS_DB_PASSWORD: wordpress_pwd
-        WORDPRESS_DB_HOST: mariadb-container:3306
-        WORDPRESS_DB_NAME: wordpress
+      - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+      - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
+      - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
+      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
     #volumes:
     # - /home/jabenjam/data/wp:/var/www/html
     ports:
       - "9000:9000"
-
-  nginx-container:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    image: nginx-container
-    links:
-      - wordpress-container
-    restart: unless-stopped
-    ports:
-      - "443:443"
 
 #  wordpress-container:
 #    image: wordpress:5.7.2-php7.3-fpm
@@ -49,12 +43,24 @@ services:
 #      - mariadb-container
 #    restart: unless-stopped
 #    environment:
-#        WORDPRESS_DB_USER: wordpress
-#        WORDPRESS_DB_PASSWORD: wordpress_pwd
-#        WORDPRESS_DB_HOST: mariadb-container:3306
-#        WORDPRESS_DB_NAME: wordpress
+#      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+#      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+#      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+#      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
 #    ports:
 #      - "9000:9000"
+
+  nginx-container:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: nginx-container
+    depends_on:
+      - wordpress-container
+    restart: unless-stopped
+    ports:
+      - "443:443"
+
 
 networks:
   default:

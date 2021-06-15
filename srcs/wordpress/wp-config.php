@@ -17,6 +17,19 @@
  * @package WordPress
  */
 
+//// ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
+///** Nom de la base de données de WordPress. */
+//define('DB_NAME', getenv('WORDPRESS_DB_NAME'));
+//
+///** Utilisateur de la base de données MySQL. */
+//define('DB_USER', getenv('WORDPRESS_DB_USER'));
+//
+///** Mot de passe de la base de données MySQL. */
+//define('DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD'));
+//
+///** Adresse de l’hébergement MySQL. */
+// define('DB_HOST', getenv('WORDPRESS_DB_HOST'));
+
 // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
 /** Nom de la base de données de WordPress. */
 define('DB_NAME', 'wordpress');
@@ -25,7 +38,7 @@ define('DB_NAME', 'wordpress');
 define('DB_USER', 'wordpress');
 
 /** Mot de passe de la base de données MySQL. */
-define('DB_PASSWORD', 'wordpress_pwd');
+define('DB_PASSWORD', 'wordpress');
 
 /** Adresse de l’hébergement MySQL. */
 define('DB_HOST', 'mariadb-container:3306');
@@ -82,13 +95,17 @@ $table_prefix = 'wp_';
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-define('WP_DEBUG', false);
+
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+  $_SERVER['HTTPS'] = 'on';
+}
 
 /* C’est tout, ne touchez pas à ce qui suit ! Bonne publication. */
 
 /** Chemin absolu vers le dossier de WordPress. */
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
+
 
 /** Réglage des variables de WordPress et de ses fichiers inclus. */
 require_once(ABSPATH . 'wp-settings.php');
