@@ -31,5 +31,6 @@ $request_method = methode http demandee pa le client
 $fastcgi_script_name = initialisee avec l'URI demandee par le client
 
 Wordpress :
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose
 https://codereviewvideos.com/course/docker-tutorial-for-beginners/video/part-1-2-wordpress-and-nginx-with-docker-compose
 https://codereviewvideos.com/course/docker-tutorial-for-beginners/video/docker-nginx-php-tutorial
