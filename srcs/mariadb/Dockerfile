@@ -2,20 +2,20 @@ FROM debian:buster
 
 COPY initialize_db.sql my.cnf ./
 
-#ENV WORDPRESS_DB_USER=$WORDPRESS_DB_USER
-#ENV WORDPRESS_DB_PASSWORD=$WORDPRESS_DB_PASSWORD
-#ENV WORDPRESS_DB_HOST=$WORDPRESS_DB_HOST
-#ENV WORDPRESS_DB_NAME=$WORDPRESS_DB_NAME
+ENV MYSQL_USER=$MYSQL_USER
+ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
+ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+ENV MYSQL_DATABASE=$MYSQL_DATABASE
 
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y mariadb-server mariadb-client \
-   # && groupadd -r mysql && useradd -r -g mysql mysql \
-    && mv my.cnf /etc/ \
+    && mv my.cnf /etc/mysql \
     && mkdir -p run/mysqld \
     && mysql_install_db --ldata=/var/lib/mysql \
-    && chown -R mysql:mysql /var/lib/mysql /run/mysqld;
+    && chown -R mysql:mysql /var/lib/mysql /run/mysqld
+#    && mysql_install_db
 
 EXPOSE 3306
 
-CMD ["mysqld_safe", "--user=wordpress", "--init_file=/initialize_db.sql"]
+CMD ["mysqld_safe", "--user=root", "--init_file=/initialize_db.sql"]

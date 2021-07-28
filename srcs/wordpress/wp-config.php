@@ -30,18 +30,6 @@ define('DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD'));
 /** Adresse de l’hébergement MySQL. */
  define('DB_HOST', getenv('WORDPRESS_DB_HOST'));
 
-#// ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
-#/** Nom de la base de données de WordPress. */
-#define('DB_NAME', 'wordpress');
-#
-#/** Utilisateur de la base de données MySQL. */
-#define('DB_USER', 'wordpress');
-#
-#/** Mot de passe de la base de données MySQL. */
-#define('DB_PASSWORD', 'wordpress');
-#
-#/** Adresse de l’hébergement MySQL. */
-#define('DB_HOST', 'mariadb-container:3306');
 #
 /** Jeu de caractères à utiliser par la base de données lors de la création des tables. */
 define('DB_CHARSET', 'utf8');
@@ -110,4 +98,4 @@ if ( !defined('ABSPATH') )
 /** Réglage des variables de WordPress et de ses fichiers inclus. */
 require_once(ABSPATH . 'wp-settings.php');
 
-/*define('WP_ALLOW_REPAIR', true);*/
+define('WP_ALLOW_REPAIR', true);

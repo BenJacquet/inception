@@ -1,4 +1,4 @@
 CREATE DATABASE IF NOT EXISTS wordpress;
-CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY 'wordpress_pwd';
-GRANT ALL ON *.* TO 'wordpress'@'localhost';
+CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY 'wordpress';
+GRANT ALL ON *.* TO 'root'@'localhost';
 FLUSH PRIVILEGES;

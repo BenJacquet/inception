@@ -1,70 +1,67 @@
 version: '3'
 services:
 
+# IMAGES PERSO 
+
   mariadb-container:
-    #build: ./mariadb
-    #image: mariadb-container
-    image: mariadb
+    build: ./mariadb
+    image: mariadb-container
     restart: always
     env_file:
       - "./.env"
-    environment:
-    #  MYSQL_USER: wordpress 
-    #  MYSQL_PASSWORD: wordpress
-    #  MYSQL_ROOT_PASSWORD: wordpress
-    #  MYSQL_DATABASE: wordpress
-    #  - MYSQL_USER=${MYSQL_USER}
-    #  - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    #  - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    #  - MYSQL_DATABASE=${MYSQL_DATABASE}
     #volumes:
     #  - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
     #  - /home/jabenjam/data/db:/var/lib/mysql
     ports:
       - "3306:3306"
 
-  wordpress-container:
-    build: ./wordpress
-    image: wordpress-container
-    depends_on:
-      - mariadb-container
-    restart: unless-stopped
-    env_file:
-      - "./.env"
-    #environment:
-    #  - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
-    #  - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
-    #  - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
-    #  - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
-    #volumes:
-    # - /home/jabenjam/data/wp:/var/www/html
-    ports:
-      - "9000:9000"
+#  wordpress-container:
+#    build: ./wordpress
+#    image: wordpress-container
+#    depends_on:
+#      - mariadb-container
+#    restart: unless-stopped
+#    env_file:
+#      - "./.env"
+#    #volumes:
+#    # - /home/jabenjam/data/wp:/var/www/html
+#    ports:
+#      - "9000:9000"
+#
+#  nginx-container:
+#    build:
+#      context: ./nginx
+#      dockerfile: Dockerfile
+#    image: nginx-container
+#    depends_on:
+#      - wordpress-container
+#    restart: unless-stopped
+#    ports:
+#      - "443:443"
+
+
+# IMAGES OFFICIELLES
 
 #  wordpress-container:
 #    image: wordpress:5.7.2-php7.3-fpm
 #    depends_on:
 #      - mariadb-container
 #    restart: unless-stopped
-#    environment:
-#      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-#      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-#      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-#      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+#    env_file:
+#      - "./.env"
 #    ports:
 #      - "9000:9000"
-
-  nginx-container:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    image: nginx-container
-    depends_on:
-      - wordpress-container
-    restart: unless-stopped
-    ports:
-      - "443:443"
-
+#
+#  mariadb-container:
+#    image: mariadb
+#    restart: always
+#    env_file:
+#      - "./.env"
+#    #volumes:
+#    #  - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
+#    #  - /home/jabenjam/data/db:/var/lib/mysql
+#    ports:
+#      - "3306:3306"
 
 networks:
   default:
