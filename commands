@@ -9,4 +9,3 @@ ps aux
 
 executer un bash dans un conteneur :
 docker exec -it nom_du_conteneur bash
-
