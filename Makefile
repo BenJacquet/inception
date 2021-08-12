@@ -12,31 +12,40 @@ all :
 	@echo "created inception network"
 	export $(cat ./srcs/.env | xargs)
 	@echo "added variables to the environment"
+	sudo mkdir -p /home/jabenjam/data/wordpress /home/jabenjam/data/mysql
+	sudo chown mysql:mysql /home/jabenjam/data/mysql
+	sudo chown www-data:www-data /home/jabenjam/data/wordpress
+	@echo "Created directories where volumes will be mounted"
 	docker-compose -f $(COMPOSE) up -d
 	@echo "created inception containers"
+
+start :
+	docker-compose -f $(COMPOSE) start
+
+stop :
+	docker-compose -f $(COMPOSE) stop
+
+restart : stop start
 
 clean :
 	docker-compose -f $(COMPOSE) down
 	@echo "removed inception containers"
-	docker network rm inception_network
-	@echo "removed inception network"
-	unset $(cat ./srcs/.unset | xargs)
 
 fclean : clean
+	unset $(cat ./srcs/.unset | xargs)
 	docker image rm -f $(IMGS)
-	@echo "removed inception images" 
-#	docker volume rm $(docker volume ls -q)
-#	@echo "removed all volumes"
+	@echo "removed inception images"
+	docker volume rm $(docker volume ls -q) || /bin/true
+	@echo "removed all volumes"
 	sudo sed -i '/127.0.0.1\tjabenjam.42.fr/d' /etc/hosts
 	@echo "removed jabenjam.42.fr from known hosts"
-
-purge :
 	@docker rm -f $(ALL_IMGS) || /bin/true
 	@docker image rm -f $(ALL_CONTAINERS) || /bin/true
 	@docker volume rm -f $(ALL_VOLUMES) || /bin/true
 	@docker network rm $(ALL_NETWORKS) || /bin/true
+	sudo rm -rf /home/jabenjam/data
 	@echo "Purged all existing images, containers, networks and volumes"
 
 re : fclean all
 
-.PHONY : setup all clean fclean purge re
+.PHONY : setup all clean fclean re

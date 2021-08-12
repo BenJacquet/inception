@@ -9,13 +9,12 @@ RUN apt-get update \
     && wget -O /var/www/latest.tar.gz http://wordpress.org/latest.tar.gz \
     && tar -xzvf /var/www/latest.tar.gz -C /var/www \
     && rm -rf /var/www/latest.tar.gz \
-    && mv /var/www/wordpress /var/www/html \ 
-    && rm -rf /var/www/html/wp-config.php \
+    && rm -rf /var/www/wordpress/wp-config.php \
     && rm -rf /etc/php/7.3/fpm/pool.d/www.conf \
-    && mv wp-config.php /var/www/html \
+    && mv wp-config.php /var/www/wordpress \
     && mv www.conf /etc/php/7.3/fpm/pool.d \
-    && chown -R www-data:www-data /var/www/html \
-    && chmod 755 -R /var/www/html/ \
+    && chown -R www-data:www-data /var/www/wordpress \
+    && chmod 755 -R /var/www/wordpress/ \
     && mkdir -p /run/php/
 
 EXPOSE 9000

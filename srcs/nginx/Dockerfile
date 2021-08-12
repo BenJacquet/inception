@@ -8,9 +8,9 @@ RUN apt-get update \
     && mkdir -p /etc/nginx/ssl \
     && chmod 700 /etc/nginx/ssl \
     && openssl req -x509 -config ssl_request.conf -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt \
-    && mkdir -p var/www/html \
-    && chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html \
+    && mkdir -p var/www/wordpress \
+    && chown -R www-data:www-data /var/www/wordpress \
+    && chmod -R 755 /var/www/wordpress \
     && rm /etc/nginx/nginx.conf \
     && mv nginx.conf etc/nginx \
     && mv jabenjam.42.fr.conf etc/nginx/conf.d

@@ -1,19 +1,28 @@
 version: '3'
 
 services:
-# IMAGES PERSO
   mariadb-container:
     build: ./mariadb
     image: mariadb-container
     restart: always
     env_file:
       - "./.env"
-    #volumes:
-    #  - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
-    #  - /home/jabenjam/data/db:/var/lib/mysql
+    volumes:
+      - mysql:/var/lib/mysql
     ports:
       - "3306:3306"
 
+  nginx-container:
+      build: ./nginx
+      image: nginx-container
+      depends_on:
+        - wordpress-container
+      restart: unless-stopped
+      volumes:
+        - wordpress:/var/www/wordpress
+      ports:
+        - "443:443"
+      
   wordpress-container:
     build: ./wordpress
     image: wordpress-container
@@ -22,20 +31,25 @@ services:
     restart: unless-stopped
     env_file:
       - "./.env"
-    #volumes:
-    # - /home/jabenjam/data/wp:/var/www/html
+    volumes:
+     - wordpress:/var/www/wordpress
     ports:
       - "9000:9000"
 
-  nginx-container:
-    build: ./nginx
-    image: nginx-container
-    depends_on:
-      - wordpress-container
-    restart: unless-stopped
-    ports:
-      - "443:443"
 
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      o: bind
+      type: volume
+      device: /home/jabenjam/data/wordpress
+  mysql:
+    driver: local
+    driver_opts:
+      o: bind
+      type: volume
+      device: /home/jabenjam/data/mysql
 
 # IMAGES OFFICIELLES
 
