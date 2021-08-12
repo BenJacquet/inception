@@ -16,7 +16,7 @@ all :
 	sudo chown mysql:mysql /home/jabenjam/data/mysql
 	sudo chown www-data:www-data /home/jabenjam/data/wordpress
 	@echo "Created directories where volumes will be mounted"
-	docker-compose -f $(COMPOSE) up -d
+	docker-compose -f $(COMPOSE) up --build -d
 	@echo "created inception containers"
 
 start :

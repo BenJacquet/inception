@@ -1,7 +1,7 @@
 creer deux utilisateurs pour le wordpress
 faire un dump du wordpress deja cree
-initialiser la base de donnee a partir des variables d'environnement
 
+OK initialiser la base de donnee a partir des variables d'environnement
 OK tomber directement sur le site quand je vais sur jabenjam.42.fr
 OK Editer les identifiants dans wp-config pour qu'ils utilisent les valeurs de l'environnement
 OK Credentials dans un fichier .env
