@@ -18,6 +18,8 @@ all :
 	@echo "Created directories where volumes will be mounted"
 	docker-compose -f $(COMPOSE) up --build -d
 	@echo "created inception containers"
+	@docker exec srcs_mariadb-container_1 ./entrypoint.sh
+	@echo "OK!"
 
 start :
 	docker-compose -f $(COMPOSE) start

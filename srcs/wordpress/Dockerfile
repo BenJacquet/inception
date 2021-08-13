@@ -4,7 +4,7 @@ COPY wp-config.php www.conf ./
 
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y wget php php-cli php-fpm php-cgi php-mysql php-mbstring \
+    && apt-get install -y wget php php-cli php-fpm php-cgi php-mysql php-mbstring procps\
     && mkdir -p /var/www \
     && wget -O /var/www/latest.tar.gz http://wordpress.org/latest.tar.gz \
     && tar -xzvf /var/www/latest.tar.gz -C /var/www \

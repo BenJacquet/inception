@@ -36,7 +36,6 @@ services:
     ports:
       - "9000:9000"
 
-
 volumes:
   wordpress:
     driver: local
@@ -50,29 +49,6 @@ volumes:
       o: bind
       type: volume
       device: /home/jabenjam/data/mysql
-
-# IMAGES OFFICIELLES
-
-#  wordpress-container:
-#    image: wordpress:5.7.2-php7.3-fpm
-#    depends_on:
-#      - mariadb-container
-#    restart: unless-stopped
-#    env_file:
-#      - "./.env"
-#    ports:
-#      - "9000:9000"
-#
-#  mariadb-container:
-#    image: mariadb
-#    restart: always
-#    env_file:
-#      - "./.env"
-#    #volumes:
-#    #  - /home/jabenjam/data/db-logs:/var/log/mysql #debug volume
-#    #  - /home/jabenjam/data/db:/var/lib/mysql
-#    ports:
-#      - "3306:3306"
 
 networks:
   default:
