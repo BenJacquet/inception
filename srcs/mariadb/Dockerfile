@@ -1,6 +1,6 @@
 FROM debian:buster
 
-COPY entrypoint.sh my.cnf database.sql ./
+COPY entrypoint.sh initialize_db.sh my.cnf database.sql ./
 
 RUN apt-get update \
     && apt-get upgrade -y \
@@ -12,4 +12,6 @@ RUN apt-get update \
 
 EXPOSE 3306
 
-CMD ["mysqld_safe", "--user=root"]
+#CMD ["mysqld_safe", "--user=root", "&&" ]
+
+ENTRYPOINT ["sh", "entrypoint.sh"]
