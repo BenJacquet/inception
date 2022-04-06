@@ -12,6 +12,4 @@ RUN apt-get update \
 
 EXPOSE 3306
 
-#CMD ["mysqld_safe", "--user=root", "&&" ]
-
 ENTRYPOINT ["sh", "entrypoint.sh"]

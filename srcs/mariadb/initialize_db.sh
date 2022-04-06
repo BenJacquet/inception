@@ -1,5 +1,6 @@
 #! /bin/bash
 
+#attendre le demarrage de mysqld
 sleep 10
 
 #creation de l'utilisateur, base de donnees et modification du mot de passe root
@@ -10,4 +11,5 @@ mysql --user=root --password=$MYSQL_ROOT_PASSWORD -e "SET PASSWORD FOR 'root'@'l
 mysql --user=root --password=$MYSQL_ROOT_PASSWORD -e "FLUSH PRIVILEGES;"
 
 #injection de la base de donnees
-mysql -u root -p$MYSQL_ROOT_PASSWORD wordpress < database.sql
+mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < database.sql
+
